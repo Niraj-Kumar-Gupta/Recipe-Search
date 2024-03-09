@@ -1,47 +1,71 @@
-const searchBtn = document.getElementById('search-btn');
+const searchInput = document.getElementById('search-input');
 const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('recipe-close-btn');
+const titleText = document.getElementById('title-search');
+const closeSearchIcon = document.getElementById('search-btn-icon');
 
+getMealList();
 // event listeners
-searchBtn.addEventListener('click', getMealList);
+searchInput.addEventListener('input', getMealList);
 mealList.addEventListener('click', getMealRecipe);
 recipeCloseBtn.addEventListener('click', () => {
     mealDetailsContent.parentElement.classList.remove('showRecipe');
 });
 
+closeSearchIcon.addEventListener('click', () => {
+    searchInput.value="";
+    getMealList();
+});
 
-// get meal list that matches with the ingredients
-function getMealList(){
-    let searchInputTxt = document.getElementById('search-input').value.trim();
-     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputTxt}`;
+
+
+function getMealList() {
+   
+    const searchInputTxt = document.getElementById('search-input').value.trim();
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInputTxt}`;
+    if(searchInputTxt.length > 0) {
+        titleText.innerHTML=`Search Result of  : "${searchInputTxt}"`;
+        closeSearchIcon.style.display='block';
+    }
+    else {
+        titleText.innerHTML="Pick Your Meals";
+        closeSearchIcon.style.display='none';
+    }
     fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        let html = "";
-        if(data.meals){
-            data.meals.forEach(meal => {
-                html += `
-                    <div class = "meal-item" data-id = "${meal.idMeal}">
-                        <div class = "meal-img">
-                            <img src = "${meal.strMealThumb}" alt = "food">
+        .then(response => response.json())
+        .then(data => {
+            let html = "";
+            console.log(data);
+            if (data.meals) {
+                data.meals.forEach(meal => {
+                    html += `
+                        <div class="meal-item" data-id="${meal.idMeal}">
+                            <div class="meal-img">
+                                <img src="${meal.strMealThumb}" alt="food">
+                            </div>
+                            <div class="meal-name">
+                                <h3>${meal.strMeal}</h3>
+                                <a href="#" class="recipe-btn">Get Recipe</a>
+                            </div>
                         </div>
-                        <div class = "meal-name">
-                            <h3>${meal.strMeal}</h3>
-                            <a href = "#" class = "recipe-btn">Get Recipe</a>
-                        </div>
-                    </div>
-                `;
-            });
-            mealList.classList.remove('notFound');
-        } else{
-            html = "Sorry, we didn't find any meal!";
-            mealList.classList.add('notFound');
-        }
+                    `;
+                });
+                mealList.classList.remove('notFound');
+            } else {
+                html = "Sorry, we didn't find any meal!";
+                mealList.classList.add('notFound');
+            }
 
-        mealList.innerHTML = html;
-    });
+            mealList.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error fetching meal data:', error);
+        });
+   
 }
+
+
 
 
 // get recipe of the meal
