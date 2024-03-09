@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
-
 *{
     padding:0px;
     margin: 0;
     box-sizing: border-box;
 }
 :root{
-    --tenne-tawny: #d65108;
+    --tenne-tawny: #87b256;
     --tenne-tawny-dark: #b54507;
 }
 body{
@@ -62,6 +61,8 @@ body{
     width: 100%;
 }
 .search-control{
+    height: 55px;
+    width: 100%;
     padding: 0 1rem;
     font-size: 1.1rem;
     font-family: inherit;
@@ -70,27 +71,25 @@ body{
     color: var(--tenne-tawny);
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    
 }
 .search-control::placeholder{
     color: var(--tenne-tawny);
 }
 .search-btn{
-    width: 55px;
-    height: 55px;
-    font-size: 1.8rem;
-    background: var(--tenne-tawny);
-    color: #fff;
+    width:50px;
+    height:50px;
     border: none;
-    border-top-right-radius: 2rem;
-    border-bottom-right-radius: 2rem;
-    transition: all 0.4s linear;
-    -webkit-transition: all 0.4s linear;
-    -moz-transition: all 0.4s linear;
-    -ms-transition: all 0.4s linear;
-    -o-transition: all 0.4s linear;
+    background-color: #fdfdfd00;
+    margin-left: -70px;
+    z-index: 1000;
+    margin-top:3px;
 }
+
 .search-btn:hover{
-    background: var(--tenne-tawny-dark);
+    color: var(--tenne-tawny-dark);
 }
 .meal-result{
     margin-top: 4rem;
@@ -121,7 +120,7 @@ body{
 .recipe-btn{
     text-decoration: none;
     color: #fff;
-    background: var(--tenne-tawny);
+    background: var(--tenne-tawny-dark);
     font-weight: 500;
     font-size: 1.1rem;
     padding: 0.75rem 0;
